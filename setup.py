@@ -8,7 +8,7 @@ commands = versioneer.get_cmdclass().copy()
 PY2 = sys.version_info.major == 2
 PY3 = sys.version_info.major == 3
 
-pkgname = "dstruct"
+pkgname = "pstruct"
 
 
 def package_files(directories):

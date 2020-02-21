@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from dstruct.validity import is_invalid_key, InvalidKeyName
+from pstruct.validity import is_invalid_key, InvalidKeyName
 
 
-class Dstruct(dict):
+class Pstruct(dict):
     """
     A dict-compatible data structure with attributes defined by slots.
     """
 
-    __slots__ = ["_dstruct"]
+    __slots__ = ["_pstruct"]
 
     def __init__(self, *args, **kwargs):
         """
@@ -22,7 +22,7 @@ class Dstruct(dict):
         Dstruct(**kwargs) -> new dictionary initialized with the name=value pairs
             in the keyword argument list.  For example:  Dstruct(one=1, two=2)
                 """
-        super(Dstruct, self).__init__(*args, **kwargs)
+        super(Pstruct, self).__init__(*args, **kwargs)
 
     def __getattr__(self, name):
         if name in self.__slots__:
@@ -42,7 +42,7 @@ class Dstruct(dict):
         )
 
 
-class ValidatedDstruct(Dstruct):
+class ValidatedPstruct(Pstruct):
     """
         A dict-compatible data structure with attributes defined by slots.
         Keys are checked for compatibility with namespaces and identifiers.
@@ -57,4 +57,4 @@ class ValidatedDstruct(Dstruct):
         if __debug__ and any(map(is_invalid_key, tmp)):
             bad_keys = [k for k in tmp if is_invalid_key(k)]
             raise InvalidKeyName(bad_keys)
-        super(ValidatedDstruct, self).__init__(tmp)
+        super(ValidatedPstruct, self).__init__(tmp)

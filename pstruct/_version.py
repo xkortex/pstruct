@@ -42,8 +42,8 @@ def get_config():
     cfg.VCS = "git"
     cfg.style = "pep440"
     cfg.tag_prefix = ""
-    cfg.parentdir_prefix = "dstruct-"
-    cfg.versionfile_source = "dstruct/_version.py"
+    cfg.parentdir_prefix = "pstruct-"
+    cfg.versionfile_source = "pstruct/_version.py"
     cfg.verbose = False
     return cfg
 

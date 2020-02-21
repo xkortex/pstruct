@@ -1,2 +1,2 @@
 include versioneer.py
-include dstruct/_version.py
+include pstruct/_version.py

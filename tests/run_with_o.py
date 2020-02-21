@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from dstruct.core import Dstruct, ValidatedDstruct
-from dstruct.hashable import HashaDictMixin
+from pstruct.core import Dstruct, ValidatedDstruct
+from pstruct.hashable import HashaDictMixin
 
 
 def test_crazy_dict_as_key_nonsense():

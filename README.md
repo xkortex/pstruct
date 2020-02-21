@@ -1,2 +1,2 @@
-# dstruct
+# pstruct
 Dictionary-like structured data
