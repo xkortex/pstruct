@@ -3,9 +3,7 @@
 import sys
 import re
 from keyword import kwlist
-
-PY2 = sys.version_info.major == 2
-PY3 = sys.version_info.major == 3
+from ._compat import isidentifier
 
 dict_list = [x for x in dict.__dict__]
 kwset = set(kwlist + dict_list)  # this is faster than iskeyword()
@@ -17,7 +15,7 @@ def is_invalid_key(s):
     # type: (str) -> Bool
     """
     Check if a string is not a valid identifier and thus unsuitable for use as a
-    Dstruct key.
+    Pstruct key.
     Invalid
 
     :param s: string to check
@@ -41,7 +39,7 @@ def is_invalid_key(s):
     """
     if s in kwset:
         return True
-    return re.match(pat_identifier, s) is None
+    return not isidentifier(s)
 
 
 class InvalidKeyName(Exception):

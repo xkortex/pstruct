@@ -12,15 +12,15 @@ class Pstruct(dict):
 
     def __init__(self, *args, **kwargs):
         """
-        Dstruct() -> new empty dictionary
-        Dstruct(mapping) -> new dictionary initialized from a mapping object's
+        Pstruct() -> new empty dictionary
+        Pstruct(mapping) -> new dictionary initialized from a mapping object's
             (key, value) pairs
-        Dstruct(iterable) -> new dictionary initialized as if via:
+        Pstruct(iterable) -> new dictionary initialized as if via:
             d = {}
             for k, v in iterable:
                 d[k] = v
-        Dstruct(**kwargs) -> new dictionary initialized with the name=value pairs
-            in the keyword argument list.  For example:  Dstruct(one=1, two=2)
+        Pstruct(**kwargs) -> new dictionary initialized with the name=value pairs
+            in the keyword argument list.  For example:  Pstruct(one=1, two=2)
                 """
         super(Pstruct, self).__init__(*args, **kwargs)
 
