@@ -6,11 +6,6 @@ from dstruct.validity import is_invalid_key, InvalidKeyName
 class Dstruct(dict):
     """
     A dict-compatible data structure with attributes defined by slots.
-    Keys are checked for compatibility with namespaces and identifiers.
-    This means keys that are keywords like `def`, `class`, `with`, `in` etc are
-    forbidden, as are dunder methods like __iter__, and any methods which collide with
-    dict methods, such as `items` and `keys`. Why? Cause that's the rules.
-    Running with -O (disabling __debug__) disables the checks.
     """
 
     __slots__ = ["_dstruct"]
@@ -27,11 +22,7 @@ class Dstruct(dict):
         Dstruct(**kwargs) -> new dictionary initialized with the name=value pairs
             in the keyword argument list.  For example:  Dstruct(one=1, two=2)
                 """
-        tmp = dict(*args, **kwargs)
-        if __debug__ and any(map(is_invalid_key, tmp)):
-            bad_keys = [k for k in tmp if is_invalid_key(k)]
-            raise InvalidKeyName(bad_keys)
-        super(Dstruct, self).__init__(tmp)
+        super(Dstruct, self).__init__(*args, **kwargs)
 
     def __getattr__(self, name):
         if name in self.__slots__:
@@ -49,3 +40,21 @@ class Dstruct(dict):
         raise AttributeError(
             "type object '{}' has no attribute '{}'".format(type(self).__name__, key)
         )
+
+
+class ValidatedDstruct(Dstruct):
+    """
+        A dict-compatible data structure with attributes defined by slots.
+        Keys are checked for compatibility with namespaces and identifiers.
+        This means keys that are keywords like `def`, `class`, `with`, `in` etc are
+        forbidden, as are dunder methods like __iter__, and any methods which collide with
+        dict methods, such as `items` and `keys`. Why? Cause that's the rules.
+        Running with -O (disabling __debug__) disables the checks.
+        """
+
+    def __init__(self, *args, **kwargs):
+        tmp = dict(*args, **kwargs)
+        if __debug__ and any(map(is_invalid_key, tmp)):
+            bad_keys = [k for k in tmp if is_invalid_key(k)]
+            raise InvalidKeyName(bad_keys)
+        super(ValidatedDstruct, self).__init__(tmp)

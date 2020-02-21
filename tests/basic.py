@@ -1,5 +1,6 @@
 import unittest
-from dstruct import Dstruct, HashaDictMixin
+from dstruct import Dstruct
+from dstruct.hashable import HashaDictMixin
 
 
 class TestSimple(unittest.TestCase):
