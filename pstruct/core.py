@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from collections import Mapping
 from pstruct.validity import is_invalid_key, InvalidKeyName
 
 
@@ -58,3 +59,15 @@ class ValidatedPstruct(Pstruct):
             bad_keys = [k for k in tmp if is_invalid_key(k)]
             raise InvalidKeyName(bad_keys)
         super(ValidatedPstruct, self).__init__(tmp)
+
+
+class NestedPStruct(Pstruct):
+    def __init__(self, *args, **kwargs):
+        """EXPERIMENTAL - automatically generate nested Pstruct attr-gettable
+        data structures
+        """
+        tmp = dict(*args, **kwargs)
+        for k, v in tmp.items():
+            if isinstance(v, Mapping):
+                tmp[k] = self.__class__(v)
+        super(NestedPStruct, self).__init__(tmp)

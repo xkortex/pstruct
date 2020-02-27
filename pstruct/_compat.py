@@ -1,6 +1,7 @@
 import re
 import os
 import sys
+import collections
 
 
 PY2 = sys.version_info[0] == 2
@@ -25,6 +26,7 @@ if PY2:
     text_type = unicode
     raw_input = raw_input
     string_types = (str, unicode)
+    primitive_iterable = (str, unicode, bytes)  # i.e. non-list iterables
     int_types = (int, long)
     iteritems = lambda x: x.iteritems()
     range_type = xrange
@@ -33,6 +35,12 @@ if PY2:
         return isinstance(x, (buffer, bytearray))
 
     _identifier_re = re.compile(r"^[a-zA-Z_][a-zA-Z0-9_]*$")
+
+    def is_nonstring_iterable(x):
+        """This is needed to differentiate strings from list-like containers"""
+        if isinstance(x, primitive_iterable):
+            return False
+        return isinstance(x, collections.Iterable)
 
     def isidentifier(x):
         return _identifier_re.search(x) is not None
@@ -47,10 +55,16 @@ else:
     text_type = str
     raw_input = input
     string_types = (str,)
+    primitive_iterable = (str, bytes)  # i.e. non-list iterables
     int_types = (int,)
     range_type = range
     isidentifier = lambda x: x.isidentifier()
     iteritems = lambda x: iter(x.items())
+
+    def is_nonstring_iterable(x):
+        if isinstance(x, primitive_iterable):
+            return False
+        return isinstance(x, collections.Iterable)
 
     def is_bytes(x):
         return isinstance(x, (bytes, memoryview, bytearray))
